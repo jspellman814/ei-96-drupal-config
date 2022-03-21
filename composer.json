@@ -15,9 +15,11 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/core-composer-scaffold": "^8.8.1",
         "drupal/core-recommended": "^8.8",
+        "drupal/smart_content": "^3.0",
         "drush-ops/behat-drush-endpoint": "^9.3",
         "drush/drush": "^8.4.5",
         "pantheon-systems/drupal-integrations": "^8",
+        "pantheon-systems/pantheon-edge-integrations": "^1.0",
         "pantheon-systems/quicksilver-pushback": "^2",
         "pantheon-systems/smart_content_cdn": "^0.2.0"
     },
