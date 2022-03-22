@@ -2664,16 +2664,16 @@
         },
         {
             "name": "pantheon-systems/smart_content_cdn",
-            "version": "0.2.0",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pantheon-systems/smart_content_cdn.git",
-                "reference": "fa14c235f70a535d83f521d8f1a360c32236c035"
+                "reference": "f8c23c80b6432368a0caeef7d0040bbdb1d9f6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pantheon-systems/smart_content_cdn/zipball/fa14c235f70a535d83f521d8f1a360c32236c035",
-                "reference": "fa14c235f70a535d83f521d8f1a360c32236c035",
+                "url": "https://api.github.com/repos/pantheon-systems/smart_content_cdn/zipball/f8c23c80b6432368a0caeef7d0040bbdb1d9f6da",
+                "reference": "f8c23c80b6432368a0caeef7d0040bbdb1d9f6da",
                 "shasum": ""
             },
             "require": {
@@ -2697,9 +2697,9 @@
             "description": "Edge Integrations for Drupal on Pantheon's platform.",
             "support": {
                 "issues": "https://github.com/pantheon-systems/smart_content_cdn/issues",
-                "source": "https://github.com/pantheon-systems/smart_content_cdn/tree/0.2.0"
+                "source": "https://github.com/pantheon-systems/smart_content_cdn/tree/0.2.1"
             },
-            "time": "2022-03-07T16:21:37+00:00"
+            "time": "2022-03-22T12:39:20+00:00"
         },
         {
             "name": "paragonie/random_compat",
