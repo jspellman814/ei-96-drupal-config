@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for Smart Content Preview module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for smart_content_segment_set_form().
+ */
+function smart_content_preview_form_smart_content_segment_set_form_alter(&$form, &$form_state) {
+  // Add callback to add preview field to form.
+  $form['#process'][] = '_smart_content_preview_add_preview_field';
+
+  // Add callback to save preview config on form submit.
+  $form['actions']['submit']['#submit'][] = '_smart_content_preview_submit_form';
+}
+
+/**
+ * Processing callback for entity form.
+ */
+function _smart_content_preview_add_preview_field(array $element, FormStateInterface $form_state, array $form) {
+  if (!empty($element['segment_set_settings']['segments'])) {
+    // Get preview config values.
+    $config = \Drupal::configFactory()->get('smart_content_preview.config');
+
+    // Loop through segments array.
+    foreach ($element['segment_set_settings']['segments'] as $uuid => &$segment) {
+      // Skip array values that aren't segments.
+      if (empty($segment['segment_settings'])) {
+        continue;
+      }
+
+      // Get default value.
+      $segment_preview_default =  $config->get('segment_set_preview.' . $uuid) ?? 0;
+
+      // Add a Preview checkbox field.
+      $segment['preview'] = [
+        '#type' => 'checkbox',
+        '#attributes' => [
+          'class' => ['smart-segments-preview', 'smart-segments-preview-' . $uuid],
+        ],
+        '#title' => t('Preview'),
+        '#default_value' => $segment_preview_default,
+      ];
+    }
+
+    // Add JS library to handle checkbox functionality.
+    $element['segment_set_settings']['segments']['#attached']['library'][] = 'smart_content_preview/form_preview_field';
+  }
+  return $element;
+}
+
+/**
+ * Submit callback for entity form.
+ */
+function _smart_content_preview_submit_form(array &$form, FormStateInterface $form_state) {
+  $config = \Drupal::configFactory()->getEditable('smart_content_preview.config');
+
+  // Keep track of segments in each set to know when they are removed.
+  $set_id = $form_state->getValue('id');
+  $stored_uuids = $config->get('set_segments.' . $set_id) ?? [];
+
+  // Get preview values from form.
+  $form_segments = $form_state->getValue('segment_set_settings');
+  if (!empty($form_segments['segments'])) {
+    // Store preview values for each segment.
+    foreach ($form_segments['segments'] as $uuid => $form_segment) {
+      $segment_preview = $form_segment['preview'] ?? 0;
+      $config->set('segment_set_preview.' . $uuid, $segment_preview)->save();
+    }
+
+    // List of current segment uuids.
+    $uuids = array_keys($form_segments['segments']);
+
+    // If uuid is stored but no longer in the set, remove preview config.
+    $uuids_diff = array_diff($stored_uuids, $uuids);
+    foreach($uuids_diff as $diff_uuid) {
+      if (in_array($diff_uuid, $stored_uuids)) {
+        $config->clear('segment_set_preview.' . $diff_uuid);
+      }
+    }
+
+    // Store segment uuids.
+    $config->set('set_segments.' . $set_id, $uuids)->save();
+  }
+  else {
+    // If there are no segments in set, clear config.
+    $config->clear('set_segments.' . $set_id);
+  }
+}
+
+

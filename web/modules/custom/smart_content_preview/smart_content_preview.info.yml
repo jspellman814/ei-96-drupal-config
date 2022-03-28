@@ -1,0 +1,7 @@
+name: 'Smart Content Preview'
+type: module
+description: 'Choose which Smart Content segments to pass in order to preview.'
+core_version_requirement: ^8 || ^9
+package: Smart Content
+dependencies:
+  - smart_content

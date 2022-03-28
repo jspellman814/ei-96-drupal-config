@@ -1,0 +1,7 @@
+services:
+  # Name of this service.
+  preview_settings_events_subscriber:
+    # Event subscriber class that will listen for the events.
+    class: '\Drupal\smart_content_preview\EventSubscriber\PreviewSettingsEventsSubscriber'
+    tags:
+      - { name: 'event_subscriber' }

@@ -1,0 +1,6 @@
+form_preview_field:
+  js:
+    js/form-preview-field.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once

@@ -1,0 +1,19 @@
+smart_content_preview.config:
+  type: config_object
+  label: 'Smart Content Preview config'
+  mapping:
+    segment_set_preview:
+      label: 'List of segment uuids and preview values.'
+      type: sequence
+      sequence:
+        label: 'Segment preview value.'
+        type: boolean
+    set_segments:
+      label: 'List of segment sets by machine name.'
+      type: sequence
+      sequence:
+        label: 'List of segment uuids per segment set.'
+        type: sequence
+        sequence:
+          label: 'Segment uuid.'
+          type: string
